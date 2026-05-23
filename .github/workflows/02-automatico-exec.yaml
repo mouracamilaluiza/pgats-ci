@@ -8,7 +8,7 @@ name: 'Execução Automatica com Push'
 on:
   push:
     branches:
-      - main
+      - master
 
 # jobs - tarefas dentro da pipeline
 jobs: 
