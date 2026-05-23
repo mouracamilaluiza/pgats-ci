@@ -1,0 +1,46 @@
+# CI de Nível 02 - Disparo Automatico através do push
+
+# nome da pipeline
+name: 'Execução Automatica com Push'
+
+# gatilhos/triggers - regras de disparo
+# gatilho automatico - push
+on:
+  push:
+    branches:
+      - main
+
+# jobs - tarefas dentro da pipeline
+jobs: 
+  # nome do job
+  e2e-tests:
+    # ambiente de execução
+    runs-on: ubuntu-latest
+
+    # passos do job
+    steps:
+      # passo 1 - clone do código
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      # passo 2 - instalação do Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.x'
+
+      # passo 3 - instalação do Yarn
+      - name: Instalando Yarn
+        run: npm install -g yarn
+      
+      # passo 4 - instalação das dependências
+      - name: Instalando dependências
+        run: yarn
+
+      # passo 5 - instalação dos browsers do playwright
+      - name: Instalando browsers do Playwright
+        run: yarn playwright install
+      
+      # passo 6 - execução dos testes
+      - name: Executando testes e2e
+        run: yarn run e2e
